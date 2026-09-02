@@ -1,0 +1,12 @@
+The Vaquill Law Identifier specification, the registry, and the identifier
+strings themselves are dedicated to the public domain under CC0 1.0 Universal.
+
+    https://creativecommons.org/publicdomain/zero/1.0/
+
+CC0 is a waiver, not a licence. Section 2 of the legal code has the Affirmer
+"overtly, fully, permanently, irrevocably and unconditionally waive, abandon,
+and surrender" the rights in the work. Surrendered rights cannot be reclaimed by
+a later owner of the company, because there is nothing left to inherit. This is
+deliberate and permanent.
+
+The reference implementation in impl/ is licensed under the MIT License.

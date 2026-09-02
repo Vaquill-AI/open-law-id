@@ -1,0 +1,92 @@
+{
+  "$comment": "The ~kind discriminators. A value here is PERMANENT from the first identifier that uses it: there is no deprecation path, because deprecating a kind would break every citation carrying it. Derived on 2026-08-31 by auditing every shape-D collision across 4,093,000 documents and separating genuine parallel series from version copies, duplicate documents and unnumbered bulletins. Only two families survived that test.",
+  "version": "0.1",
+  "rules": {
+    "primary_series_takes_the_bare_leaf": "Where a container holds parallel series, the PRIMARY series (the one the corpus is named for) carries no ~kind and the others do. This follows the AKN4Africa rule of never renumbering the original: adding a secondary series later must not change identifiers already minted for the primary one.",
+    "permanent": "Once any identifier uses a kind, that spelling is fixed forever. Enumerate a corpus's kinds BEFORE minting it.",
+    "never_infer_from_level_classifier": "Puerto Rico stores level_classifier='article' for BOTH its articles and its sections. The discriminator must come from the citation, not from a structural label.",
+    "kind_comes_from_the_citation": "A kind is assigned by matching `citation_pattern` against the document's own publisher citation, anchored at the end because the discriminator precedes the leaf. It is NEVER inferred from level_classifier, which Puerto Rico sets to 'article' for both its articles and its sections.",
+    "kind_is_applied_uniformly_not_only_on_collision": "Where a citation matches, the kind is applied to EVERY such document, whether or not a sibling currently collides with it. Applying it only on collision would make an identifier depend on whether a sibling happens to exist, so adding one later would silently change an identifier already published."
+  },
+  "kinds": [
+    {
+      "kind": "form",
+      "corpus": "court-rules",
+      "primary_series": "rule",
+      "description": "A form or sample document issued alongside a rule, sharing its number.",
+      "evidence": {
+        "jurisdiction": "al",
+        "container": "Alabama Rules for Using Videotape Equipment to Record Court Proceedings",
+        "collides_at_leaf": "3",
+        "documents": [
+          {
+            "act_id": "SRULES_AL_ARVE_R3",
+            "citation": "Ala. R. Videotape Equip. 3",
+            "title": "Rule 3. The official record of court proceedings",
+            "mints": "vq1:us/al/court-rules/.../3"
+          },
+          {
+            "act_id": "SRULES_AL_ARVE_FORM3",
+            "citation": "Ala. R. Videotape Equip., Form 3",
+            "title": "Form 3. Sample Tags or Labels for Marking Exhibits",
+            "mints": "vq1:us/al/court-rules/.../3~form"
+          }
+        ]
+      },
+      "citation_pattern": ",\\s*Form\\s+\\S+\\s*$",
+      "primary_series_citation_pattern": "\\s\\S+\\s*$"
+    },
+    {
+      "kind": "section",
+      "corpus": "statutes",
+      "primary_series": "article",
+      "description": "A numbered section of an act that also numbers its articles, where the two sequences overlap. Puerto Rico's leyes carry both an Articulo sequence and a Seccion sequence.",
+      "evidence": {
+        "jurisdiction": "pr",
+        "container": "Ley 68-2016",
+        "collides_at_leaf": "10",
+        "documents": [
+          {
+            "act_id": "STATE_PR_LEY_68_2016_ART10",
+            "citation": "Ley 68-2016 art. 10",
+            "title": "Articulo 10. Legitimacion para presentar acciones judiciales",
+            "mints": "vq1:us/pr/statutes/.../10"
+          },
+          {
+            "act_id": "STATE_PR_LEY_68_2016_SEC10",
+            "citation": "Ley 68-2016 sec. 10",
+            "title": "Seccion 10. Se elimina el Capitulo 6 de la Ley 21-2016",
+            "mints": "vq1:us/pr/statutes/.../10~section"
+          }
+        ]
+      },
+      "citation_pattern": "\\bsec\\.\\s*\\S+\\s*$",
+      "primary_series_citation_pattern": "\\bart\\.\\s*\\S+\\s*$"
+    }
+  ],
+  "rejected": [
+    {
+      "candidate": "admi / boar / code / clsb",
+      "jurisdiction": "mn",
+      "corpus": "court-rules",
+      "why_not_a_kind": "These are separate RULE SETS, which is a container level, not a parallel series inside one container. Minnesota stores 14 of them under chapter 'pr' with byte-identical citation 'Minn. R. Prof. 4'. Modelling them as kinds would encode a corpus defect into a permanent identifier.",
+      "resolution": "Fixed in the MN ingester and CUT OVER on 2026-09-02: the citable unit is the (code, subtype) pair, and the set's name is scraped from the publisher's own <h2 class=\"subtype_header\"> rather than tabulated or invented. Eleven codes were found to hold 33 sets, so this was never a 'pr' problem. mn/court-rules now mints 958 documents with zero collisions. Note the primary-series rule above is load-bearing here: ap/rcap carries NO sub-heading because it is the shelf's own series, and reading that absence as a parse failure would have dropped 42 live appellate rules."
+    },
+    {
+      "candidate": "legislation / terrorism / aptrenewals / claimsdatacall / repealbulletin",
+      "jurisdiction": "wi, tn, al and other agency-guidance corpora",
+      "why_not_a_kind": "These are document TITLES, surfacing because unnumbered bulletins derive their leaf from an issue date and two bulletins share a day. That is collision class B, and the remedy is spec rule B1 (slug from the title), not an unbounded kind vocabulary drawn from subject matter."
+    },
+    {
+      "candidate": "valtunknown* / vr / ls / vls",
+      "jurisdiction": "mt, dc, federal",
+      "why_not_a_kind": "Version markers the audit's version regex did not catch. Collision class A: the same Work at different Expressions, which a Work identifier is correct to merge."
+    },
+    {
+      "candidate": "ae / af",
+      "jurisdiction": "federal",
+      "corpus": "agency-guidance",
+      "why_not_a_kind": "Part E and Part F of a policy manual. A container level, recovered correctly since the 2026-08-31 container-path fix."
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "$comment": "The CLOSED corpus vocabulary. A value here is permanent once any identifier uses it. Propose an addition by pull request; see registry/README.md.",
+  "version": "0.1",
+  "corpora": [
+    {
+      "slug": "agency-guidance",
+      "description": "Sub-regulatory guidance issued by an executive agency",
+      "internal_tokens": [
+        "AGENCY_GUIDANCE",
+        "STATE_AGENCY_GUIDANCE"
+      ]
+    },
+    {
+      "slug": "cfr",
+      "description": "Code of Federal Regulations",
+      "internal_tokens": [
+        "CFR"
+      ]
+    },
+    {
+      "slug": "constitution",
+      "description": "A constitution, federal or state",
+      "internal_tokens": [
+        "CONSTITUTION",
+        "STATE_CONSTITUTION"
+      ]
+    },
+    {
+      "slug": "court-rules",
+      "description": "Rules of court",
+      "internal_tokens": [
+        "STATE_RULES"
+      ]
+    },
+    {
+      "slug": "executive-action",
+      "description": "Presidential documents: executive orders, proclamations, memoranda",
+      "internal_tokens": [
+        "EXECUTIVE_ACTION"
+      ]
+    },
+    {
+      "slug": "federal-register",
+      "description": "Federal Register agency rules, final and proposed",
+      "internal_tokens": [
+        "FEDERAL_REGISTER"
+      ]
+    },
+    {
+      "slug": "federal-rules",
+      "description": "Federal Rules of Procedure and Evidence",
+      "internal_tokens": [
+        "FEDERAL_RULES"
+      ]
+    },
+    {
+      "slug": "regulations",
+      "description": "Administrative regulations of a state",
+      "internal_tokens": [
+        "REGULATION"
+      ]
+    },
+    {
+      "slug": "sentencing-guidelines",
+      "description": "United States Sentencing Guidelines",
+      "internal_tokens": [
+        "SENTENCING_GUIDELINES"
+      ]
+    },
+    {
+      "slug": "session-laws",
+      "description": "Laws as enacted, before codification",
+      "internal_tokens": [
+        "SESSION_LAW"
+      ]
+    },
+    {
+      "slug": "statutes",
+      "description": "A codified statutory code",
+      "internal_tokens": [
+        "STATE"
+      ]
+    },
+    {
+      "slug": "tax-treaties",
+      "description": "Bilateral income tax treaties",
+      "internal_tokens": [
+        "US_TAX_TREATY"
+      ]
+    },
+    {
+      "slug": "usc",
+      "description": "United States Code",
+      "internal_tokens": [
+        "USC"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,637 @@
+{
+  "$comment": "Jurisdiction codes. Two-letter USPS for states and territories; the literal 'federal' for the United States. Aligned with OCD division ids (ocd-division/country:us/state:XX), the de facto US civic-data jurisdiction key.",
+  "version": "0.1",
+  "jurisdictions": [
+    {
+      "code": "ak",
+      "name": "Alaska",
+      "ocd_division": "ocd-division/country:us/state:ak",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "al",
+      "name": "Alabama",
+      "ocd_division": "ocd-division/country:us/state:al",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ar",
+      "name": "Arkansas",
+      "ocd_division": "ocd-division/country:us/state:ar",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "az",
+      "name": "Arizona",
+      "ocd_division": "ocd-division/country:us/state:az",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ca",
+      "name": "California",
+      "ocd_division": "ocd-division/country:us/state:ca",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "co",
+      "name": "Colorado",
+      "ocd_division": "ocd-division/country:us/state:co",
+      "corpora": [
+        "constitution",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ct",
+      "name": "Connecticut",
+      "ocd_division": "ocd-division/country:us/state:ct",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "dc",
+      "name": "District of Columbia",
+      "ocd_division": "ocd-division/country:us/state:dc",
+      "corpora": [
+        "agency-guidance",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "de",
+      "name": "Delaware",
+      "ocd_division": "ocd-division/country:us/state:de",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "federal",
+      "name": "United States (federal)",
+      "ocd_division": "ocd-division/country:us",
+      "corpora": [
+        "agency-guidance",
+        "cfr",
+        "constitution",
+        "executive-action",
+        "federal-register",
+        "federal-rules",
+        "sentencing-guidelines",
+        "session-laws",
+        "tax-treaties",
+        "usc"
+      ]
+    },
+    {
+      "code": "fl",
+      "name": "Florida",
+      "ocd_division": "ocd-division/country:us/state:fl",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ga",
+      "name": "Georgia",
+      "ocd_division": "ocd-division/country:us/state:ga",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "hi",
+      "name": "Hawaii",
+      "ocd_division": "ocd-division/country:us/state:hi",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ia",
+      "name": "Iowa",
+      "ocd_division": "ocd-division/country:us/state:ia",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "id",
+      "name": "Idaho",
+      "ocd_division": "ocd-division/country:us/state:id",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "il",
+      "name": "Illinois",
+      "ocd_division": "ocd-division/country:us/state:il",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "in",
+      "name": "Indiana",
+      "ocd_division": "ocd-division/country:us/state:in",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ks",
+      "name": "Kansas",
+      "ocd_division": "ocd-division/country:us/state:ks",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ky",
+      "name": "Kentucky",
+      "ocd_division": "ocd-division/country:us/state:ky",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "la",
+      "name": "Louisiana",
+      "ocd_division": "ocd-division/country:us/state:la",
+      "corpora": [
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ma",
+      "name": "Massachusetts",
+      "ocd_division": "ocd-division/country:us/state:ma",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "md",
+      "name": "Maryland",
+      "ocd_division": "ocd-division/country:us/state:md",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "me",
+      "name": "Maine",
+      "ocd_division": "ocd-division/country:us/state:me",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "mi",
+      "name": "Michigan",
+      "ocd_division": "ocd-division/country:us/state:mi",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "mn",
+      "name": "Minnesota",
+      "ocd_division": "ocd-division/country:us/state:mn",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "mo",
+      "name": "Missouri",
+      "ocd_division": "ocd-division/country:us/state:mo",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ms",
+      "name": "Mississippi",
+      "ocd_division": "ocd-division/country:us/state:ms",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "mt",
+      "name": "Montana",
+      "ocd_division": "ocd-division/country:us/state:mt",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "nc",
+      "name": "North Carolina",
+      "ocd_division": "ocd-division/country:us/state:nc",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "nd",
+      "name": "North Dakota",
+      "ocd_division": "ocd-division/country:us/state:nd",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ne",
+      "name": "Nebraska",
+      "ocd_division": "ocd-division/country:us/state:ne",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "nh",
+      "name": "New Hampshire",
+      "ocd_division": "ocd-division/country:us/state:nh",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "nj",
+      "name": "New Jersey",
+      "ocd_division": "ocd-division/country:us/state:nj",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "nm",
+      "name": "New Mexico",
+      "ocd_division": "ocd-division/country:us/state:nm",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "nv",
+      "name": "Nevada",
+      "ocd_division": "ocd-division/country:us/state:nv",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ny",
+      "name": "New York",
+      "ocd_division": "ocd-division/country:us/state:ny",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "oh",
+      "name": "Ohio",
+      "ocd_division": "ocd-division/country:us/state:oh",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ok",
+      "name": "Oklahoma",
+      "ocd_division": "ocd-division/country:us/state:ok",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "or",
+      "name": "Oregon",
+      "ocd_division": "ocd-division/country:us/state:or",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "pa",
+      "name": "Pennsylvania",
+      "ocd_division": "ocd-division/country:us/state:pa",
+      "corpora": [
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "pr",
+      "name": "Puerto Rico",
+      "ocd_division": "ocd-division/country:us/state:pr",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ri",
+      "name": "Rhode Island",
+      "ocd_division": "ocd-division/country:us/state:ri",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "sc",
+      "name": "South Carolina",
+      "ocd_division": "ocd-division/country:us/state:sc",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "sd",
+      "name": "South Dakota",
+      "ocd_division": "ocd-division/country:us/state:sd",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "tn",
+      "name": "Tennessee",
+      "ocd_division": "ocd-division/country:us/state:tn",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "tx",
+      "name": "Texas",
+      "ocd_division": "ocd-division/country:us/state:tx",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "ut",
+      "name": "Utah",
+      "ocd_division": "ocd-division/country:us/state:ut",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "va",
+      "name": "Virginia",
+      "ocd_division": "ocd-division/country:us/state:va",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "vt",
+      "name": "Vermont",
+      "ocd_division": "ocd-division/country:us/state:vt",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "wa",
+      "name": "Washington",
+      "ocd_division": "ocd-division/country:us/state:wa",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "wi",
+      "name": "Wisconsin",
+      "ocd_division": "ocd-division/country:us/state:wi",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "wv",
+      "name": "West Virginia",
+      "ocd_division": "ocd-division/country:us/state:wv",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    },
+    {
+      "code": "wy",
+      "name": "Wyoming",
+      "ocd_division": "ocd-division/country:us/state:wy",
+      "corpora": [
+        "agency-guidance",
+        "constitution",
+        "court-rules",
+        "regulations",
+        "statutes"
+      ]
+    }
+  ]
+}

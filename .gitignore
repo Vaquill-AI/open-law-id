@@ -1,0 +1,44 @@
+__pycache__/
+*.pyc
+.ruff_cache/
+.pytest_cache/
+
+# ---------------------------------------------------------------------------
+# NOT PUBLISHED. These stay on disk and out of the repository.
+# ---------------------------------------------------------------------------
+#
+# `concordance/` and `audit/` are internal BY CONSTRUCTION, not by preference:
+# both hardcode a path into the private product repository and import from its
+# application code, so they could not run for anyone else even if published. The
+# concordance ARTIFACT is the public thing; the pipeline that derives it from our
+# corpus is not, and the distinction is the same one the registry draws when it
+# says nobody should need our data to use this scheme.
+#
+# `PLAN.md` and `research/06-community/` are commercial: competitive analysis,
+# what to budget this as, and which organisations to approach. Publishing a
+# target list alongside an invitation to adopt would be its own answer.
+#
+# A file listed here can still be forced in with `git add -f`. Do not.
+PLAN.md
+research/
+audit/
+concordance/
+
+# Build artifacts of a full corpus run.
+#
+# `concordance.jsonl.gz` is the artifact intended for CC0 publication, but it is
+# 125 MB and rebuilt from the corpus, so it is released, not committed.
+#
+# `ledger.jsonl.gz` is INTERNAL and must not be published as-is. It is a gap
+# register: it names internal act_ids, enumerates the documents we hold but
+# cannot address, and lists the corpora where our provenance is missing or
+# non-official. That is the same class of artifact as the US corpus gap register,
+# which was decided to stay internal. Publish counts and classes from the
+# manifest, never the register itself.
+concordance/dist/
+
+# The resolver index: 1.8 GB of SQLite, rebuilt from the concordance by
+# `resolver/build_index.py` in a few minutes. Released alongside the concordance
+# for anyone who wants to run their own resolver without rebuilding, never
+# committed. It is derived data and contains nothing the concordance does not.
+resolver/dist/

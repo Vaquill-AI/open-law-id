@@ -1,0 +1,295 @@
+{
+  "$comment": "Conformance corpus for the Vaquill Law Identifier. Any implementation claiming conformance MUST produce these outputs and MUST refuse these inputs. Cases are drawn from real adversarial data in a 4,093,000-document corpus, not invented.",
+  "spec_version": "0.1",
+  "mint": [
+    {
+      "name": "plain-statute",
+      "why": "the ordinary shape",
+      "mint": {
+        "jurisdiction": "mt",
+        "corpus": "statutes",
+        "containers": [
+          "title 10",
+          "chapter 1",
+          "part 10"
+        ],
+        "leaf": "10-1-1001"
+      },
+      "expect": "vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001"
+    },
+    {
+      "name": "alphanumeric-title",
+      "why": "Alabama's title 13A. A numeric-only parse loses the letter",
+      "mint": {
+        "jurisdiction": "al",
+        "corpus": "statutes",
+        "containers": [
+          "title 13A",
+          "chapter 6"
+        ],
+        "leaf": "13A-6-2"
+      },
+      "expect": "vq1:us/al/statutes/title-13a/chapter-6/13a-6-2"
+    },
+    {
+      "name": "alphanumeric-leaf",
+      "why": "WAC 458-20-24001A carries a letter in its FINAL segment",
+      "mint": {
+        "jurisdiction": "wa",
+        "corpus": "regulations",
+        "containers": [
+          "title 458",
+          "chapter 458-20"
+        ],
+        "leaf": "458-20-24001A"
+      },
+      "expect": "vq1:us/wa/regulations/title-458/chapter-458-20/458-20-24001a"
+    },
+    {
+      "name": "embedded-alpha-leaf",
+      "why": "Virginia writes 9VAC25-720-60 with no separator before the alpha run",
+      "mint": {
+        "jurisdiction": "va",
+        "corpus": "regulations",
+        "containers": [
+          "title 9",
+          "agency 25",
+          "chapter 720"
+        ],
+        "leaf": "9VAC25-720-60"
+      },
+      "expect": "vq1:us/va/regulations/title-9/agency-25/chapter-720/9vac25-720-60"
+    },
+    {
+      "name": "space-in-leaf",
+      "why": "Wisconsin writes 'NR 10.06'; the space must fold to a single dash",
+      "mint": {
+        "jurisdiction": "wi",
+        "corpus": "regulations",
+        "containers": [
+          "NR 10"
+        ],
+        "leaf": "NR 10.06"
+      },
+      "expect": "vq1:us/wi/regulations/nr-10/nr-10.06"
+    },
+    {
+      "name": "federal-jurisdiction",
+      "why": "'federal' is a literal, not a two-letter code",
+      "mint": {
+        "jurisdiction": "federal",
+        "corpus": "usc",
+        "containers": [
+          "title 42"
+        ],
+        "leaf": "1983"
+      },
+      "expect": "vq1:us/federal/usc/title-42/1983"
+    },
+    {
+      "name": "section-symbol-stripped",
+      "why": "the section symbol is not URL-safe and carries no identity",
+      "mint": {
+        "jurisdiction": "mt",
+        "corpus": "statutes",
+        "containers": [
+          "title 10"
+        ],
+        "leaf": "\u00a7 10-1-1001"
+      },
+      "expect": "vq1:us/mt/statutes/title-10/10-1-1001"
+    },
+    {
+      "name": "kind-discriminator",
+      "why": "Alabama issues both Rule 3 and Form 3 in one container (collision class C)",
+      "mint": {
+        "jurisdiction": "al",
+        "corpus": "court-rules",
+        "containers": [
+          "alabama rules of court",
+          "videotape"
+        ],
+        "leaf": "3",
+        "kind": "form"
+      },
+      "expect": "vq1:us/al/court-rules/alabama-rules-of-court/videotape/3~form"
+    },
+    {
+      "name": "point-in-time-date",
+      "why": "an Expression identifier",
+      "mint": {
+        "jurisdiction": "mt",
+        "corpus": "statutes",
+        "containers": [
+          "title 10"
+        ],
+        "leaf": "10-1-1001",
+        "point_in_time": "2019-03-03"
+      },
+      "expect": "vq1:us/mt/statutes/title-10/10-1-1001@2019-03-03"
+    },
+    {
+      "name": "point-in-time-label",
+      "why": "a named version; MUST NOT begin with a digit (USLM rule)",
+      "mint": {
+        "jurisdiction": "mt",
+        "corpus": "statutes",
+        "containers": [
+          "title 10"
+        ],
+        "leaf": "10-1-1001",
+        "point_in_time": "enacted"
+      },
+      "expect": "vq1:us/mt/statutes/title-10/10-1-1001@enacted"
+    },
+    {
+      "name": "uscis-volume-part",
+      "why": "USCIS Policy Manual: Volume and Part are containers, not positional indices",
+      "mint": {
+        "jurisdiction": "federal",
+        "corpus": "agency-guidance",
+        "containers": [
+          "USCIS Policy Manual",
+          "Volume 10 - Employment Authorization",
+          "Part A - Policies"
+        ],
+        "leaf": "1"
+      },
+      "expect": "vq1:us/federal/agency-guidance/uscis-policy-manual/volume-10-employment-authorization/part-a-policies/1"
+    },
+    {
+      "name": "case-folding",
+      "why": "8A and 8a fold together; 769 such groups exist in a real corpus",
+      "mint": {
+        "jurisdiction": "ny",
+        "corpus": "statutes",
+        "containers": [
+          "article 29"
+        ],
+        "leaf": "8A"
+      },
+      "expect": "vq1:us/ny/statutes/article-29/8a"
+    },
+    {
+      "name": "punctuation-collapses",
+      "why": "a comma and a run of separators collapse to one dash",
+      "mint": {
+        "jurisdiction": "mi",
+        "corpus": "statutes",
+        "containers": [
+          "chapter 390",
+          "Territorial Laws of 1833, Vol III"
+        ],
+        "leaf": "390.757"
+      },
+      "expect": "vq1:us/mi/statutes/chapter-390/territorial-laws-of-1833-vol-iii/390.757"
+    }
+  ],
+  "refuse": [
+    {
+      "name": "no-containers",
+      "why": "a leaf alone collides on 23.472% of a real corpus",
+      "mint": {
+        "jurisdiction": "mt",
+        "corpus": "statutes",
+        "containers": [],
+        "leaf": "10-1-1001"
+      }
+    },
+    {
+      "name": "leaf-normalizes-to-nothing",
+      "why": "never substitute a placeholder for an unidentifiable leaf",
+      "mint": {
+        "jurisdiction": "mt",
+        "corpus": "statutes",
+        "containers": [
+          "title 10"
+        ],
+        "leaf": "\u00a7\u00a7\u00a7"
+      }
+    },
+    {
+      "name": "container-normalizes-to-nothing",
+      "why": "same rule applies to any ancestor",
+      "mint": {
+        "jurisdiction": "mt",
+        "corpus": "statutes",
+        "containers": [
+          "title 10",
+          "---"
+        ],
+        "leaf": "1"
+      }
+    },
+    {
+      "name": "bare-year-point-in-time",
+      "why": "'2019' is ambiguous between a date and a label",
+      "mint": {
+        "jurisdiction": "mt",
+        "corpus": "statutes",
+        "containers": [
+          "title 10"
+        ],
+        "leaf": "1",
+        "point_in_time": "2019"
+      }
+    },
+    {
+      "name": "uppercase-kind",
+      "why": "kind is lowercase alpha only",
+      "mint": {
+        "jurisdiction": "mt",
+        "corpus": "statutes",
+        "containers": [
+          "title 10"
+        ],
+        "leaf": "1",
+        "kind": "Rule"
+      }
+    },
+    {
+      "name": "missing-jurisdiction",
+      "why": "required",
+      "mint": {
+        "jurisdiction": "",
+        "corpus": "statutes",
+        "containers": [
+          "title 10"
+        ],
+        "leaf": "1"
+      }
+    }
+  ],
+  "parse": [
+    {
+      "name": "rejects-dangling-at",
+      "why": "AKN reads a dangling @ as 'original', USLM as 'current'. Forbidden here.",
+      "parse": "vq1:us/mt/statutes/title-10/10-1-1001@",
+      "valid": false
+    },
+    {
+      "name": "rejects-uppercase",
+      "why": "identifiers are lowercase",
+      "parse": "vq1:us/MT/statutes/title-10/10-1-1001",
+      "valid": false
+    },
+    {
+      "name": "rejects-missing-version",
+      "why": "the version prefix is mandatory",
+      "parse": "us/mt/statutes/title-10/10-1-1001",
+      "valid": false
+    },
+    {
+      "name": "rejects-leaf-only",
+      "why": "at least one container plus a leaf",
+      "parse": "vq1:us/mt/statutes/10-1-1001",
+      "valid": false
+    },
+    {
+      "name": "accepts-future-version",
+      "why": "vq2 must parse even to a vq1 reader; that is the point of the prefix",
+      "parse": "vq2:us/mt/statutes/title-10/10-1-1001",
+      "valid": true
+    }
+  ]
+}
