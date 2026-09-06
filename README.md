@@ -9,6 +9,8 @@ vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001
 **4,039,901 provisions across 53 jurisdictions and 13 corpora**, published as a CC0 download.
 The specification is a draft at v0.1. A minted identifier is not: it resolves forever.
 
+[![Discord](https://img.shields.io/badge/Discord-Join%20the%20community-5865F2?logo=discord&logoColor=white)](https://discord.gg/GQtnwxf8nQ)
+
 ## What it looks like
 
 One shape for every kind of US law, so you address a court rule the same way you address a statute.
@@ -201,3 +203,7 @@ Research started 2026-08-31.
 The specification is a draft at v0.1, the reference implementation and registry exist, and the concordance builder is written but has not been run over the full corpus.
 Nothing has been published, and no external body has been approached.
 `GOVERNANCE.md` records what must be settled first.
+
+## Community
+
+Questions, ideas, or want to contribute? Join the Vaquill community on [Discord](https://discord.gg/GQtnwxf8nQ).
