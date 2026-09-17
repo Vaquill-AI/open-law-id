@@ -3,6 +3,22 @@
   "version": "0.1",
   "corpora": [
     {
+      "slug": "ag-opinions",
+      "description": "A formal written opinion of a state Attorney General, interpreting that state's own statutes, constitution or regulations",
+      "why_its_own_slug": "Not `agency-guidance`: an AG opinion answers a question put by a named official and carries persuasive weight in that state's courts, which sub-regulatory guidance does not. Not `agency-adjudication`: it decides no dispute between parties. Each jurisdiction publishes a self-contained numbered series, so the publisher's own opinion number is the leaf.",
+      "internal_tokens": [
+        "STATE_AG_OPINION"
+      ]
+    },
+    {
+      "slug": "agency-adjudication",
+      "description": "A decided case or adjudicative opinion of a federal agency: NLRB Board decisions, MSPB, BIA and other immigration precedent, SEC Commission opinions, FTC administrative decisions, OLC opinions, CFPB enforcement actions",
+      "why_not_agency_guidance": "An adjudication DECIDES a dispute between parties; guidance ADVISES prospectively about what an agency will do. They are cited differently, they carry different weight, and merging them would make it impossible to ask for one and not the other.",
+      "internal_tokens": [
+        "AGENCY_ADJUDICATION"
+      ]
+    },
+    {
       "slug": "agency-guidance",
       "description": "Sub-regulatory guidance issued by an executive agency",
       "internal_tokens": [
@@ -41,9 +57,10 @@
     },
     {
       "slug": "federal-register",
-      "description": "Federal Register agency rules, final and proposed",
+      "description": "Federal Register documents: agency rules, proposed rules and notices",
       "internal_tokens": [
-        "FEDERAL_REGISTER"
+        "FEDERAL_REGISTER",
+        "FEDERAL_REGISTER_NOTICE"
       ]
     },
     {
@@ -75,6 +92,14 @@
       ]
     },
     {
+      "slug": "statute-compilations",
+      "description": "An act compiled as amended, published as a single document. GPO's COMPS collection is the federal example",
+      "why_not_statutes_or_session_laws": "A compilation is none of the three neighbours. `statutes` is a CODE, arranged by subject and continuously revised. `session-laws` is an act AS ENACTED, frozen at the moment of passage. A compilation is one act as it stands TODAY after every amendment, which is a third thing and the form a practitioner actually reads.",
+      "internal_tokens": [
+        "STATUTE_COMPILATION"
+      ]
+    },
+    {
       "slug": "statutes",
       "description": "A codified statutory code",
       "internal_tokens": [
@@ -94,6 +119,23 @@
       "internal_tokens": [
         "USC"
       ]
+    }
+  ],
+  "not_mintable": [
+    {
+      "internal_token": "CFR_ANNUAL",
+      "points": 2844809,
+      "decision": "NOT a corpus, and deliberately given no slug.",
+      "why": "The CFR annual editions are the SAME provisions as `cfr` at different points in time: `24 C.F.R. 100.201 (2009 ed.)` and the current eCFR `24 C.F.R. 100.201` are one Work at two Expressions. Giving them a slug would model a time series as a body of law.",
+      "and_it_would_not_even_work": "Measured 2026-09-03: a cfr_annual document's container path carries NO year (`Housing and Urban Development / OFFICE OF ... / FAIR HOUSING`), so every edition of a section would mint the identifier of every other edition of that same section and the whole corpus would drop as collisions. Putting the year INTO the path is forbidden by specification 4.4, which bars edition markers from the identifier for the reason this case illustrates.",
+      "unblocks_when": "Specification 3.1 opens the Expression layer, at which point these are minted as `...@2009-01-01` against the existing `cfr` Work."
+    },
+    {
+      "internal_token": "USC_ANNUAL",
+      "decision": "NOT a corpus, and deliberately given no slug. Same ruling as CFR_ANNUAL.",
+      "why": "The annual editions of the US Code are the SAME provisions as `usc` at different points in time. `20 U.S.C. 84 (2024)` and the current `20 U.S.C. 84` are one Work at two Expressions.",
+      "and_it_would_not_even_work": "Measured 2026-09-17: a usc_annual document's container path carries NO year (`title 20 / chapter 4`), so every edition of a section would mint the identifier of every other edition of it AND of the live `usc` section itself. The edition is in the act_id (`..._ED2024`) and nowhere the identifier can see. Putting the year INTO the path is forbidden by specification 4.4, which bars edition markers for exactly this reason.",
+      "unblocks_when": "Specification 3.1 opens the Expression layer, at which point these mint as `...@2024-01-01` against the existing `usc` Work."
     }
   ]
 }

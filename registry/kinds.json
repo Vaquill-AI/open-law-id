@@ -23,13 +23,13 @@
             "act_id": "SRULES_AL_ARVE_R3",
             "citation": "Ala. R. Videotape Equip. 3",
             "title": "Rule 3. The official record of court proceedings",
-            "mints": "vq1:us/al/court-rules/.../3"
+            "mints": "us1:al/court-rules/.../3"
           },
           {
             "act_id": "SRULES_AL_ARVE_FORM3",
             "citation": "Ala. R. Videotape Equip., Form 3",
             "title": "Form 3. Sample Tags or Labels for Marking Exhibits",
-            "mints": "vq1:us/al/court-rules/.../3~form"
+            "mints": "us1:al/court-rules/.../3~form"
           }
         ]
       },
@@ -50,13 +50,13 @@
             "act_id": "STATE_PR_LEY_68_2016_ART10",
             "citation": "Ley 68-2016 art. 10",
             "title": "Articulo 10. Legitimacion para presentar acciones judiciales",
-            "mints": "vq1:us/pr/statutes/.../10"
+            "mints": "us1:pr/statutes/.../10"
           },
           {
             "act_id": "STATE_PR_LEY_68_2016_SEC10",
             "citation": "Ley 68-2016 sec. 10",
             "title": "Seccion 10. Se elimina el Capitulo 6 de la Ley 21-2016",
-            "mints": "vq1:us/pr/statutes/.../10~section"
+            "mints": "us1:pr/statutes/.../10~section"
           }
         ]
       },

@@ -1,9 +1,9 @@
-"""vqresolve: turn a citation a lawyer typed into a law you can open.
+"""lawid_resolver: turn a citation a lawyer typed into a law you can open.
 
     >>> r = Resolver("resolver.sqlite")
     >>> hit = r.resolve("Mont. Code Ann. 10-1-1001")
-    >>> hit.vq, hit.source_url            # doctest: +SKIP
-    ('vq1:us/mt/statutes/...', 'https://leg.mt.gov/...')
+    >>> hit.law_id, hit.source_url            # doctest: +SKIP
+    ('us1:mt/statutes/...', 'https://leg.mt.gov/...')
 
 WHY A RESOLVER COMES BEFORE A SPECIFICATION
 DOI existed for three years with no application and went nowhere. Crossref
@@ -15,7 +15,7 @@ WHAT IT IS FOR, AND WHAT IT IS NOT FOR
 It answers the crosswalk question: "here is a citation, what is the canonical
 identifier and where is the official text". That genuinely needs data.
 
-It is NOT needed to MINT an identifier. `vqlaw.mint` is pure and offline, and
+It is NOT needed to MINT an identifier. `lawid.mint` is pure and offline, and
 that separation is load-bearing: a scheme you must ask us to use is a scheme
 nobody uses. Anyone can compute an identifier with no network and no account;
 the resolver only saves you from holding 4 million rows yourself.
@@ -71,7 +71,7 @@ def citation_key(citation: str) -> str:
 class Hit:
     """One resolved provision."""
 
-    vq: str
+    law_id: str
     jurisdiction: str
     corpus: str
     citation: str | None
@@ -116,10 +116,10 @@ class Resolver:
     def __exit__(self, *_exc: object) -> None:
         self.close()
 
-    def lookup(self, vq: str) -> Hit | None:
+    def lookup(self, law_id: str) -> Hit | None:
         """Forward: an identifier to its provision. Exact, and the fast path."""
         row = self._db.execute(
-            "SELECT * FROM identifier WHERE vq = ?", ((vq or "").strip(),)
+            "SELECT * FROM identifier WHERE law_id = ?", ((law_id or "").strip(),)
         ).fetchone()
         return _hit(row) if row else None
 
@@ -139,7 +139,7 @@ class Resolver:
         if jurisdiction:
             sql += " AND jurisdiction = ?"
             params.append(jurisdiction.strip().casefold())
-        return [_hit(r) for r in self._db.execute(sql + " ORDER BY vq", params)]
+        return [_hit(r) for r in self._db.execute(sql + " ORDER BY law_id", params)]
 
     def stats(self) -> dict[str, int]:
         row = self._db.execute(
@@ -152,7 +152,7 @@ class Resolver:
 
 def _hit(row: sqlite3.Row) -> Hit:
     return Hit(
-        vq=row["vq"],
+        law_id=row["law_id"],
         jurisdiction=row["jurisdiction"],
         corpus=row["corpus"],
         citation=row["citation"],

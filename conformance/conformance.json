@@ -1,5 +1,5 @@
 {
-  "$comment": "Conformance corpus for the Vaquill Law Identifier. Any implementation claiming conformance MUST produce these outputs and MUST refuse these inputs. Cases are drawn from real adversarial data in a 4,093,000-document corpus, not invented.",
+  "$comment": "Conformance corpus for the US Law Identifier. Any implementation claiming conformance MUST produce these outputs and MUST refuse these inputs. Cases are drawn from real adversarial data in a 4,093,000-document corpus, not invented.",
   "spec_version": "0.1",
   "mint": [
     {
@@ -15,7 +15,7 @@
         ],
         "leaf": "10-1-1001"
       },
-      "expect": "vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001"
+      "expect": "us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001"
     },
     {
       "name": "alphanumeric-title",
@@ -29,7 +29,7 @@
         ],
         "leaf": "13A-6-2"
       },
-      "expect": "vq1:us/al/statutes/title-13a/chapter-6/13a-6-2"
+      "expect": "us1:al/statutes/title-13a/chapter-6/13a-6-2"
     },
     {
       "name": "alphanumeric-leaf",
@@ -43,7 +43,7 @@
         ],
         "leaf": "458-20-24001A"
       },
-      "expect": "vq1:us/wa/regulations/title-458/chapter-458-20/458-20-24001a"
+      "expect": "us1:wa/regulations/title-458/chapter-458-20/458-20-24001a"
     },
     {
       "name": "embedded-alpha-leaf",
@@ -58,7 +58,7 @@
         ],
         "leaf": "9VAC25-720-60"
       },
-      "expect": "vq1:us/va/regulations/title-9/agency-25/chapter-720/9vac25-720-60"
+      "expect": "us1:va/regulations/title-9/agency-25/chapter-720/9vac25-720-60"
     },
     {
       "name": "space-in-leaf",
@@ -71,7 +71,7 @@
         ],
         "leaf": "NR 10.06"
       },
-      "expect": "vq1:us/wi/regulations/nr-10/nr-10.06"
+      "expect": "us1:wi/regulations/nr-10/nr-10.06"
     },
     {
       "name": "federal-jurisdiction",
@@ -84,7 +84,7 @@
         ],
         "leaf": "1983"
       },
-      "expect": "vq1:us/federal/usc/title-42/1983"
+      "expect": "us1:federal/usc/title-42/1983"
     },
     {
       "name": "section-symbol-stripped",
@@ -97,7 +97,7 @@
         ],
         "leaf": "\u00a7 10-1-1001"
       },
-      "expect": "vq1:us/mt/statutes/title-10/10-1-1001"
+      "expect": "us1:mt/statutes/title-10/10-1-1001"
     },
     {
       "name": "kind-discriminator",
@@ -112,7 +112,7 @@
         "leaf": "3",
         "kind": "form"
       },
-      "expect": "vq1:us/al/court-rules/alabama-rules-of-court/videotape/3~form"
+      "expect": "us1:al/court-rules/alabama-rules-of-court/videotape/3~form"
     },
     {
       "name": "point-in-time-date",
@@ -126,7 +126,7 @@
         "leaf": "10-1-1001",
         "point_in_time": "2019-03-03"
       },
-      "expect": "vq1:us/mt/statutes/title-10/10-1-1001@2019-03-03"
+      "expect": "us1:mt/statutes/title-10/10-1-1001@2019-03-03"
     },
     {
       "name": "point-in-time-label",
@@ -140,7 +140,7 @@
         "leaf": "10-1-1001",
         "point_in_time": "enacted"
       },
-      "expect": "vq1:us/mt/statutes/title-10/10-1-1001@enacted"
+      "expect": "us1:mt/statutes/title-10/10-1-1001@enacted"
     },
     {
       "name": "uscis-volume-part",
@@ -155,7 +155,7 @@
         ],
         "leaf": "1"
       },
-      "expect": "vq1:us/federal/agency-guidance/uscis-policy-manual/volume-10-employment-authorization/part-a-policies/1"
+      "expect": "us1:federal/agency-guidance/uscis-policy-manual/volume-10-employment-authorization/part-a-policies/1"
     },
     {
       "name": "case-folding",
@@ -168,7 +168,7 @@
         ],
         "leaf": "8A"
       },
-      "expect": "vq1:us/ny/statutes/article-29/8a"
+      "expect": "us1:ny/statutes/article-29/8a"
     },
     {
       "name": "punctuation-collapses",
@@ -182,7 +182,7 @@
         ],
         "leaf": "390.757"
       },
-      "expect": "vq1:us/mi/statutes/chapter-390/territorial-laws-of-1833-vol-iii/390.757"
+      "expect": "us1:mi/statutes/chapter-390/territorial-laws-of-1833-vol-iii/390.757"
     }
   ],
   "refuse": [
@@ -264,13 +264,13 @@
     {
       "name": "rejects-dangling-at",
       "why": "AKN reads a dangling @ as 'original', USLM as 'current'. Forbidden here.",
-      "parse": "vq1:us/mt/statutes/title-10/10-1-1001@",
+      "parse": "us1:mt/statutes/title-10/10-1-1001@",
       "valid": false
     },
     {
       "name": "rejects-uppercase",
       "why": "identifiers are lowercase",
-      "parse": "vq1:us/MT/statutes/title-10/10-1-1001",
+      "parse": "us1:MT/statutes/title-10/10-1-1001",
       "valid": false
     },
     {
@@ -282,13 +282,13 @@
     {
       "name": "rejects-leaf-only",
       "why": "at least one container plus a leaf",
-      "parse": "vq1:us/mt/statutes/10-1-1001",
+      "parse": "us1:mt/statutes/10-1-1001",
       "valid": false
     },
     {
       "name": "accepts-future-version",
       "why": "vq2 must parse even to a vq1 reader; that is the point of the prefix",
-      "parse": "vq2:us/mt/statutes/title-10/10-1-1001",
+      "parse": "us2:mt/statutes/title-10/10-1-1001",
       "valid": true
     }
   ]

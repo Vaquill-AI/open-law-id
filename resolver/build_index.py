@@ -35,11 +35,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from vqresolve import citation_key
+from lawid_resolver import citation_key
 
 _SCHEMA = """
 CREATE TABLE identifier (
-    vq           TEXT PRIMARY KEY,
+    law_id       TEXT PRIMARY KEY,
     jurisdiction TEXT NOT NULL,
     corpus       TEXT NOT NULL,
     citation     TEXT,
@@ -65,7 +65,7 @@ def rows(path: Path):
             record = json.loads(line)
             citation = record.get("citation")
             yield (
-                record["vq"],
+                record["law_id"],
                 record["jurisdiction"],
                 record["corpus"],
                 citation,

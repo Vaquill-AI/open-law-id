@@ -1,12 +1,12 @@
-"""vqlaw: the reference implementation of the Vaquill Law Identifier.
+"""lawid: the reference implementation of the US Law Identifier.
 
 A uniform, derivable, permanent identifier for any provision of United States
 law. See ../../spec/SPEC-v0.1.md for the normative rules.
 
     >>> mint("mt", "statutes", ["title 10", "chapter 1", "part 10"], "10-1-1001")
-    'vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001'
+    'us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001'
 
-    >>> parse("vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001").jurisdiction
+    >>> parse("us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001").jurisdiction
     'mt'
 
 DESIGN CONSTRAINTS, all deliberate:
@@ -37,7 +37,7 @@ from pathlib import Path
 
 __all__ = [
     "VERSION",
-    "VqId",
+    "LawId",
     "corpora",
     "jurisdictions",
     "kinds",
@@ -48,8 +48,17 @@ __all__ = [
 ]
 
 #: The identifier format version. It is part of every identifier, so that a
-#: future revision of the rules can mint `vq2:` without invalidating anything
-#: already minted under `vq1:`. Borrowed from multiformats/CID self-description.
+#: future revision of the rules can mint `us2:` without invalidating anything
+#: already minted under `us1:`. Borrowed from multiformats/CID self-description.
+#:
+#: The scheme names the JURISDICTION FAMILY, never the vendor that built it.
+#: A vendor-named prefix asks every competitor to write a rival's name into
+#: their own database forever, and it cannot survive the handover this project
+#: commits to: GRID was free, CC0, good and widely adopted, and its own vendor
+#: retired it because "two open organisation identifiers could be perceived as
+#: competing against each other". FIGI is the counter-example and the model
+#: followed here: a neutral scheme name, with any minter marking itself in a
+#: provider slot that every other minter can occupy too.
 VERSION = 1
 
 _REGISTRY = Path(__file__).resolve().parents[2] / "registry"
@@ -62,8 +71,8 @@ _DASHES = re.compile(r"-{2,}")
 
 _SEGMENT = r"[a-z0-9.-]+"
 _ID_RE = re.compile(
-    rf"^vq(?P<version>\d+):"
-    rf"us/(?P<jurisdiction>[a-z]{{2}}|federal)"
+    rf"^us(?P<version>\d+):"
+    rf"(?P<jurisdiction>[a-z]{{2}}|federal)"
     rf"/(?P<corpus>[a-z-]+)"
     rf"/(?P<rest>{_SEGMENT}(?:/{_SEGMENT})*?)"
     rf"(?:~(?P<kind>[a-z]+))?"
@@ -76,7 +85,7 @@ class InvalidIdentifier(ValueError):
 
 
 @dataclass(frozen=True)
-class VqId:
+class LawId:
     """A parsed identifier."""
 
     version: int
@@ -108,11 +117,13 @@ class VqId:
         return _render(self, point_in_time=self.point_in_time)
 
 
-def _render(parts: VqId, *, point_in_time: str | None) -> str:
-    body = "/".join((parts.leaf,)) if not parts.containers else "/".join(
-        (*parts.containers, parts.leaf)
+def _render(parts: LawId, *, point_in_time: str | None) -> str:
+    body = (
+        "/".join((parts.leaf,))
+        if not parts.containers
+        else "/".join((*parts.containers, parts.leaf))
     )
-    out = f"vq{parts.version}:us/{parts.jurisdiction}/{parts.corpus}/{body}"
+    out = f"us{parts.version}:{parts.jurisdiction}/{parts.corpus}/{body}"
     if parts.kind:
         out += f"~{parts.kind}"
     if point_in_time:
@@ -198,7 +209,7 @@ def mint(
         _check_point_in_time(point_in_time)
 
     return _render(
-        VqId(version, j, c, tuple(path), leaf_seg, kind, None),
+        LawId(version, j, c, tuple(path), leaf_seg, kind, None),
         point_in_time=point_in_time,
     )
 
@@ -216,7 +227,7 @@ def _check_point_in_time(value: str) -> None:
     )
 
 
-def parse(identifier: str) -> VqId:
+def parse(identifier: str) -> LawId:
     """Parse an identifier, or raise ``InvalidIdentifier``."""
     match = _ID_RE.match(identifier or "")
     if not match:
@@ -226,7 +237,7 @@ def parse(identifier: str) -> VqId:
         raise InvalidIdentifier(
             f"identifier needs at least one container and a leaf: {identifier!r}"
         )
-    return VqId(
+    return LawId(
         version=int(match.group("version")),
         jurisdiction=match.group("jurisdiction"),
         corpus=match.group("corpus"),

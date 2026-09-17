@@ -3,10 +3,11 @@
 A uniform, derivable, permanent identifier for any provision of United States law, and the crosswalk that maps existing citations onto it.
 
 ```
-vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001
+us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001
 ```
 
-**4,039,901 provisions across 53 jurisdictions and 13 corpora**, published as a CC0 download.
+**5M+ provisions across every US jurisdiction and every corpus type**, published as a CC0 download.
+The corpus grows continuously, so exact counts live in the release notes and the manifest that ships with each artifact, never in this page.
 The specification is a draft at v0.1. A minted identifier is not: it resolves forever.
 
 [![Discord](https://img.shields.io/badge/Discord-Join%20the%20community-5865F2?logo=discord&logoColor=white)](https://discord.gg/GQtnwxf8nQ)
@@ -17,11 +18,11 @@ One shape for every kind of US law, so you address a court rule the same way you
 
 | Citation | Identifier |
 |---|---|
-| `ORS 1.001` | `vq1:us/or/statutes/title-1/chapter-1/1.001` |
-| `14 C.F.R. § 3 (2026)` | `vq1:us/federal/cfr/title-14/chapter-ii/part-241/3` |
-| `CR 1` (Kentucky) | `vq1:us/ky/court-rules/kentucky-court-rules/kentucky-rules-of-civil-procedure/1` |
-| `U.S. Const. pmbl.` | `vq1:us/federal/constitution/us-constitution/preamble` |
-| `Pub. L. 106-1, sec. 1` | `vq1:us/federal/session-laws/pub.-l.-106-1/1` |
+| `ORS 1.001` | `us1:or/statutes/title-1/chapter-1/1.001` |
+| `14 C.F.R. § 3 (2026)` | `us1:federal/cfr/title-14/chapter-ii/part-241/3` |
+| `CR 1` (Kentucky) | `us1:ky/court-rules/kentucky-court-rules/kentucky-rules-of-civil-procedure/1` |
+| `U.S. Const. pmbl.` | `us1:federal/constitution/us-constitution/preamble` |
+| `Pub. L. 106-1, sec. 1` | `us1:federal/session-laws/pub.-l.-106-1/1` |
 
 ### It separates things that look the same
 
@@ -34,8 +35,8 @@ Ala. R. Videotape Equip., Form 3    ->  .../alabama-rules-for-using-videotape-..
 Ley 230-2004 art. 1                 ->  .../ley-del-centro-comprensivo-de-ca-ncer-de/1
 Ley 230-2004 sec. 1                 ->  .../ley-del-centro-comprensivo-de-ca-ncer-de/1~section
 
-Pub. L. 106-1, sec. 1               ->  vq1:us/federal/session-laws/pub.-l.-106-1/1
-Priv. L. 106-1, sec. 1              ->  vq1:us/federal/session-laws/priv.-l.-106-1/1
+Pub. L. 106-1, sec. 1               ->  us1:federal/session-laws/pub.-l.-106-1/1
+Priv. L. 106-1, sec. 1              ->  us1:federal/session-laws/priv.-l.-106-1/1
 ```
 
 The `~kind` discriminator comes from the publisher's own citation, never from a structural label. Puerto Rico stores `level_classifier: article` for **both** sides of that collision, so a structural label would give the two colliding documents the same answer.
@@ -43,8 +44,8 @@ The `~kind` discriminator comes from the publisher's own citation, never from a 
 ### Amendment is two identifiers, not a changing one
 
 ```
-Work        vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001
-Expression  vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001@2019-03-03
+Work        us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001
+Expression  us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001@2019-03-03
 ```
 
 The Work never changes, including when the text does. Each amendment mints an Expression, and **two Expressions sharing a Work is the amendment signal**. Absence of `@` means the current version, not the original. The Expression layer is specified but not yet mintable: you cannot date a provision whose amendment history you do not hold, and a wrong date baked into a permanent identifier is unfixable.
@@ -81,7 +82,7 @@ So the bet is narrow and deliberate: supply the **cross-jurisdiction layer** and
 
 ```text
 spec/               the specification
-impl/vqlaw/         reference implementation: zero dependencies, pure, no IO
+impl/lawid/         reference implementation: zero dependencies, pure, no IO
 impl/tests/         conformance tests against conformance/conformance.json
 conformance/        the adversarial fixture corpus
 registry/           the three closed vocabularies: jurisdictions, corpora, kinds
@@ -102,13 +103,13 @@ The pipeline that derives the concordance from our own corpus is deliberately no
 **Mint one.** No network, no account, no index, nothing from us.
 
 ```python
->>> import vqlaw
->>> vqlaw.mint("mt", "statutes", ["title 10", "chapter 1", "part 10"], "10-1-1001")
-'vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001'
+>>> import lawid
+>>> lawid.mint("mt", "statutes", ["title 10", "chapter 1", "part 10"], "10-1-1001")
+'us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001'
 
->>> vqlaw.parse(_).jurisdiction
+>>> lawid.parse(_).jurisdiction
 'mt'
->>> vqlaw.normalize("Mont. Code Ann. § 10-1-1001")
+>>> lawid.normalize("Mont. Code Ann. § 10-1-1001")
 'mont.-code-ann.-10-1-1001'
 ```
 
@@ -134,7 +135,7 @@ $ curl -s 'localhost:8080/resolve?citation=Mont.+Code+Ann.+%C2%A7+10-1-1001' | j
   "count": 1,
   "results": [
     {
-      "id": "vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001",
+      "id": "us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001",
       "jurisdiction": "mt",
       "corpus": "statutes",
       "citation": "Mont. Code Ann. 10-1-1001",
@@ -150,11 +151,11 @@ $ curl -s 'localhost:8080/resolve?citation=Mont.+Code+Ann.+%C2%A7+10-1-1001' | j
 Or in Python, without the service:
 
 ```python
->>> from vqresolve import Resolver
+>>> from lawid_resolver import Resolver
 >>> r = Resolver("resolver.sqlite")
 >>> r.resolve("MONT. CODE ANN. 10 1 1001")[0].source_url      # case and punctuation do not matter
 'https://mca.legmt.gov/bills/mca/title_0100/...'
->>> r.lookup("vq1:us/or/statutes/title-1/chapter-1/1.001").heading
+>>> r.lookup("us1:or/statutes/title-1/chapter-1/1.001").heading
 'State policy for courts'
 ```
 
@@ -166,14 +167,14 @@ Three things the resolver does deliberately:
 
 ## One rule holds this together
 
-**Nothing outside `impl/vqlaw/` and `registry/` may decide what an identifier looks like.**
+**Nothing outside `impl/lawid/` and `registry/` may decide what an identifier looks like.**
 
 The audit broke this rule and it cost us the headline number.
-`audit/collision_audit.py` carried its own copy of `normalize` whose character class kept `_`, while the published `vqlaw.normalize` folds `_` to `-`.
+`audit/collision_audit.py` carried its own copy of `normalize` whose character class kept `_`, while the published `lawid.normalize` folds `_` to `-`.
 So the collision rate quoted in the specification was measured against an identifier space that would never have been minted, and the published implementation merges documents the audit counted as distinct.
 The audit now imports `normalize` rather than defining one.
 
-The same rule is why `concordance/build_concordance.py` imports `vqlaw.mint`, reads the corpus slug from `registry/corpora.json`, and recovers the container path with the shipped `container_path`.
+The same rule is why `concordance/build_concordance.py` imports `lawid.mint`, reads the corpus slug from `registry/corpora.json`, and recovers the container path with the shipped `container_path`.
 It decides only which documents are **eligible**, and records every one it rejected.
 
 ## The gate
@@ -189,7 +190,8 @@ Wisconsin writes `NR 10.06`.
 Federal OSHA has `1910.16-3`.
 
 The gate passed, provided the identifier carries the **full container path**.
-Dropping it costs 23.472% of the corpus to collisions; carrying it costs a fraction of a percent, most of which is versioned copies of one provision that a Work identifier is supposed to merge.
+Dropping it costs over 23% of the corpus to collisions; carrying it costs a small fraction of a percent, most of which is versioned copies of one provision that a Work identifier is supposed to merge.
+Specification section 5 carries the exact figures and the date they were measured.
 See specification §5.
 
 Two rules follow from the audit and are not negotiable:

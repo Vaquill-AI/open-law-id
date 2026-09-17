@@ -24,7 +24,7 @@ import pytest
 _RESOLVER = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_RESOLVER))
 
-from vqresolve import Resolver, citation_key
+from lawid_resolver import Resolver, citation_key
 
 _REAL_INDEX = _RESOLVER / "dist/resolver.sqlite"
 needs_real = pytest.mark.skipif(
@@ -37,13 +37,13 @@ def tiny(tmp_path_factory) -> Resolver:
     path = tmp_path_factory.mktemp("idx") / "t.sqlite"
     db = sqlite3.connect(path)
     db.executescript(
-        "CREATE TABLE identifier (vq TEXT PRIMARY KEY, jurisdiction TEXT NOT NULL,"
+        "CREATE TABLE identifier (law_id TEXT PRIMARY KEY, jurisdiction TEXT NOT NULL,"
         " corpus TEXT NOT NULL, citation TEXT, cite_key TEXT, heading TEXT,"
         " status TEXT, source_url TEXT) WITHOUT ROWID;"
     )
     rows = [
         (
-            "vq1:us/mt/statutes/t/c/1",
+            "us1:mt/statutes/t/c/1",
             "mt",
             "statutes",
             "Mont. Code Ann. 10-1-1001",
@@ -54,7 +54,7 @@ def tiny(tmp_path_factory) -> Resolver:
         ),
         # Same citation, two jurisdictions. Abbreviations collide across states.
         (
-            "vq1:us/aa/statutes/t/c/1",
+            "us1:aa/statutes/t/c/1",
             "aa",
             "statutes",
             "Mont. Code Ann. 10-1-1001",
@@ -64,7 +64,7 @@ def tiny(tmp_path_factory) -> Resolver:
             None,
         ),
         (
-            "vq1:us/pr/regulations/r/1",
+            "us1:pr/regulations/r/1",
             "pr",
             "regulations",
             "Reglamento Num. 5622, Art. 1",
@@ -117,9 +117,9 @@ def test_an_unknown_citation_returns_empty_not_a_guess(tiny):
 
 
 def test_forward_lookup_is_exact(tiny):
-    assert tiny.lookup("vq1:us/mt/statutes/t/c/1").jurisdiction == "mt"
-    assert tiny.lookup("vq1:us/mt/statutes/t/c/1 ").jurisdiction == "mt", "whitespace"
-    assert tiny.lookup("vq1:nope") is None
+    assert tiny.lookup("us1:mt/statutes/t/c/1").jurisdiction == "mt"
+    assert tiny.lookup("us1:mt/statutes/t/c/1 ").jurisdiction == "mt", "whitespace"
+    assert tiny.lookup("us1:nope") is None
 
 
 def test_a_missing_index_fails_loudly_not_empty():
@@ -142,8 +142,8 @@ def test_a_public_and_a_private_law_resolve_apart(real):
     public = real.resolve("Pub. L. 106-1, sec. 1")
     private = real.resolve("Priv. L. 106-1, sec. 1")
     assert public and private
-    assert public[0].vq != private[0].vq
-    assert "priv" in private[0].vq
+    assert public[0].law_id != private[0].law_id
+    assert "priv" in private[0].law_id
 
 
 @needs_real
@@ -151,8 +151,8 @@ def test_a_form_citation_reaches_the_form_and_not_the_rule(real):
     form = real.resolve("Ala. R. Videotape Equip., Form 3")
     rule = real.resolve("Ala. R. Videotape Equip. 3")
     assert form and rule
-    assert form[0].vq.endswith("~form")
-    assert not rule[0].vq.endswith("~form")
+    assert form[0].law_id.endswith("~form")
+    assert not rule[0].law_id.endswith("~form")
 
 
 @needs_real

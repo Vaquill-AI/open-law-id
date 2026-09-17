@@ -1,4 +1,4 @@
-# The Vaquill Law Identifier, v0.1
+# The US Law Identifier, v0.1
 
 **Status: draft. Not published. Not frozen.**
 
@@ -20,10 +20,10 @@ A uniform, derivable, permanent identifier for any provision of United States la
 
 ---
 
-## 1. Versioning: why the identifier carries `vq1:`
+## 1. Versioning: why the identifier carries `us1:`
 
 ```
-vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001
+us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001
 ^^^
 ```
 
@@ -33,7 +33,7 @@ This exists because of a documented failure. Crossref instructs members to make 
 
 We have replicated that failure ourselves. Washington served 807 phantom `2026` amendment years harvested from a page banner. A Texas regex tail-match permanently minted `TX_INS_B_00` from `B-0046B-00`.
 
-The version prefix converts "we might get the normalization wrong" from a reason to delay into a versioning problem already solved. `vq1:` and a future `vq2:` coexist with no flag day, exactly as multicodec-prefixed CIDs do.
+The version prefix converts "we might get the normalization wrong" from a reason to delay into a versioning problem already solved. `us1:` and a future `us2:` coexist with no flag day, exactly as multicodec-prefixed CIDs do.
 
 **The separable promises, and this distinction is load-bearing:**
 
@@ -42,21 +42,22 @@ The version prefix converts "we might get the normalization wrong" from a reason
 | **This specification** | May be revised. v0.1 is a draft. |
 | **A minted identifier** | **Resolves forever.** Never re-minted, never re-pointed, even if v2 would mint a different string for that provision. |
 
-A revision that would change an existing string increments the prefix. Identifiers already minted under `vq1:` keep resolving under `vq1:` in perpetuity.
+A revision that would change an existing string increments the prefix. Identifiers already minted under `us1:` keep resolving under `us1:` in perpetuity.
 
 ---
 
 ## 2. Grammar
 
 ```abnf
-vq-id         = version ":" work-path [ "@" point-in-time ]
+law-id        = scheme ":" work-path [ "@" point-in-time ]
 
-version       = "vq" 1*DIGIT
+scheme        = country-code 1*DIGIT          ; "us1", and a future "us2"
 
-work-path     = country "/" jurisdiction "/" corpus
+work-path     = jurisdiction "/" corpus
                 *( "/" container ) "/" leaf
 
-country       = "us"
+country-code  = "us"                          ; the SCHEME names the country,
+                                              ; so it is not repeated in the path
 jurisdiction  = 2ALPHA / "federal"
 corpus        = 1*( ALPHA / "-" )
 container     = segment
@@ -81,7 +82,7 @@ This is deliberate and it is the single highest-value design decision available.
 
 Borrowed verbatim in spirit from ECLI: *"So as not to compromise its use or comprehensibility an ECLI must not be extended with any other components."*
 
-A `vq1:` identifier MUST NOT carry a format suffix, a language tag, a pinpoint beyond `~kind`, a publisher, or any other component. Everything variable belongs in metadata beside the identifier, never inside it.
+A `us1:` identifier MUST NOT carry a format suffix, a language tag, a pinpoint beyond `~kind`, a publisher, or any other component. Everything variable belongs in metadata beside the identifier, never inside it.
 
 ### 2.2 The `label` rule
 
@@ -96,8 +97,8 @@ Reserved labels: `enacted`, `original`, `current`, `prospective`.
 The requirement "immutable, yet reveals amendment" is self-contradictory in one string. URN:LEX and Akoma Ntoso both resolve it the same way, through FRBR, and so do we.
 
 ```
-Work        vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001
-Expression  vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001@2019-03-03
+Work        us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001
+Expression  us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001@2019-03-03
 ```
 
 - The **Work** is the provision as a continuing thing, across every version it has ever had. It carries **no** point-in-time component. It never changes, including when the text changes.
@@ -108,7 +109,7 @@ Expression  vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001@2019-03-03
 
 This matters because AKN and USLM disagree here, and getting it backwards silently serves the wrong point in time:
 
-| | AKN | USLM | **vq1** |
+| | AKN | USLM | **us1** |
 |---|---|---|---|
 | `@` with no value | **original** | **current** | *not permitted* |
 | no `@` at all | current | current | **current** |
@@ -118,7 +119,7 @@ We forbid a dangling `@` outright rather than inherit either reading.
 
 ### 3.1 The Expression layer is NOT YET MINTABLE
 
-**1,001,464 documents, 24.5% of the corpus, carry no usable amendment year.** You cannot mint `@2019-03-03` for a provision whose amendment history you do not hold, and a wrong date baked into a permanent identifier is unfixable.
+**Measured 2026-08-31: 1,001,464 documents, 24.5% of the corpus, carried no usable amendment year.** You cannot mint `@2019-03-03` for a provision whose amendment history you do not hold, and a wrong date baked into a permanent identifier is unfixable.
 
 The Expression layer is therefore **blocked on the amendment-history backfill** and ships in a later revision. The Work layer ships now.
 
@@ -278,12 +279,12 @@ Audited across **all 260 passes, 4,093,000 documents**, in 23 minutes.
 
 The 0.250% above is superseded and was never the real figure. **The corrections were measurement defects, not scheme defects**, and most were in our own code:
 
-1. **The audit was not measuring the published scheme.** `collision_audit.py` carried its own copy of `normalize` whose character class kept `_`, while `vqlaw.normalize` folds `_` to `-`. It now imports `normalize` and defines none.
+1. **The audit was not measuring the published scheme.** `collision_audit.py` carried its own copy of `normalize` whose character class kept `_`, while `lawid.normalize` folds `_` to `-`. It now imports `normalize` and defines none.
 2. **The Work-level fold was over-eager, and would have deleted law.** A repeating bare-number suffix pattern read `DE_INS_PA_40_20260112` (Delaware insurance bulletin 40 of 2026-01-12) as a version marker and folded an entire bulletin series into one document: 294 of 303 `de` agency-guidance documents and 1,129 of 1,164 `de` regulations. Version markers and bare numbers are now separate classes with separate evidentiary rules.
 3. **Reissues were counted as collisions.** See rule A1 below.
 4. **Rules B1, B2, C1 and E1 were specified but not implemented.** All four now are.
 
-Measured with `vqlaw.mint` over **4,139,923 documents in 260 groups**:
+Measured with `lawid.mint` over **4,139,923 documents in 260 groups**:
 
 | | Documents |
 |---|---|
@@ -423,7 +424,7 @@ This scheme is deliberately shaped so that a deterministic mapping exists in bot
 
 **The open question that decides extension-versus-fork:** whether GPO considers `/us/{state}/...` in scope, out of scope, or unclaimed. That is one email to the USLM maintainer and it should be sent before v1.0.
 
-**Akoma Ntoso.** A deterministic two-way mapping to AKN FRBR URIs SHOULD be published alongside this spec. If a `vq1:` identifier can emit a valid AKN expression URI on request, every AKN tool becomes a downstream consumer at zero cost and the "why another standard" objection dissolves.
+**Akoma Ntoso.** A deterministic two-way mapping to AKN FRBR URIs SHOULD be published alongside this spec. If a `us1:` identifier can emit a valid AKN expression URI on request, every AKN tool becomes a downstream consumer at zero cost and the "why another standard" objection dissolves.
 
 Note the separator hazard when mapping: AKN uses `!` for component and `~` for portion; **USLM uses `!` for language**. We use `~` for kind and nothing for component. Detect the dialect before parsing anything foreign.
 

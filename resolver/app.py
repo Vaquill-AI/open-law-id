@@ -4,7 +4,7 @@
     uvicorn resolver.app:app --port 8080
 
     GET /resolve?citation=Mont.+Code+Ann.+10-1-1001
-    GET /id/vq1:us/mt/statutes/title-10/chapter-1/part-10/10-1-1001
+    GET /id/us1:mt/statutes/title-10/chapter-1/part-10/10-1-1001
     GET /healthz
 
 THREE THINGS THIS DELIBERATELY DOES NOT HAVE
@@ -35,20 +35,20 @@ from fastapi.responses import JSONResponse
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from vqresolve import Resolver, citation_key
+from lawid_resolver import Resolver, citation_key
 
 INDEX = Path(
     os.environ.get(
-        "VQ_RESOLVER_INDEX", str(Path(__file__).resolve().parent / "dist/resolver.sqlite")
+        "LAWID_RESOLVER_INDEX", str(Path(__file__).resolve().parent / "dist/resolver.sqlite")
     )
 )
 
 app = FastAPI(
-    title="Vaquill Law Identifier resolver",
+    title="US Law Identifier resolver",
     description=(
         "Resolve a United States legal citation to its canonical identifier and "
         "the official publisher URL. Free and unmetered. The identifier itself is "
-        "computable offline with `vqlaw.mint`; this service is only the crosswalk."
+        "computable offline with `lawid.mint`; this service is only the crosswalk."
     ),
     version="0.1",
 )
@@ -65,7 +65,7 @@ def resolver() -> Resolver:
 
 def _payload(hit: Any) -> dict[str, Any]:
     return {
-        "id": hit.vq,
+        "id": hit.law_id,
         "jurisdiction": hit.jurisdiction,
         "corpus": hit.corpus,
         "citation": hit.citation,
