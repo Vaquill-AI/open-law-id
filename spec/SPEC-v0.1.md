@@ -8,7 +8,7 @@ A uniform, derivable, permanent identifier for any provision of United States la
 
 ## 0. What this is, and what it is not
 
-**It is** a machine address for a legal provision, uniform across all 51 jurisdictions and every corpus type, computable offline from the official citation, and permanent once minted.
+**It is** a machine address for a legal provision, uniform across every US jurisdiction (the 50 states, DC, Puerto Rico and the federal government) and every corpus type, computable offline from the official citation, and permanent once minted.
 
 **It is not** a replacement for `Mont. Code Ann. § 10-1-1001`. The official citation is court-mandated, Bluebook-governed, and stays exactly where it is. This identifier fills the two layers that have no incumbent: a **cross-jurisdiction machine address**, and a **point-in-time selector**.
 

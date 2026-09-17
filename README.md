@@ -54,7 +54,7 @@ The Work never changes, including when the text does. Each amendment mints an Ex
 
 Every US legal provision gets one identifier that is:
 
-* **uniform** across all 51 jurisdictions and every corpus type (statutes, regulations, court rules, constitutions, agency guidance, and whatever is added later);
+* **uniform** across every US jurisdiction (the 50 states, DC, Puerto Rico and the federal government) and every corpus type (statutes, regulations, court rules, constitutions, agency guidance, and whatever is added later);
 * **immutable**, so a reference made today still resolves in ten years;
 * **derivable** from the official citation, so anyone can compute one without asking us;
 * **temporal**, so a specific historical version of a provision can be cited;
