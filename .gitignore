@@ -42,3 +42,9 @@ concordance/dist/
 # for anyone who wants to run their own resolver without rebuilding, never
 # committed. It is derived data and contains nothing the concordance does not.
 resolver/dist/
+
+# The holdings table of contents: ~134 MB, 4.99 million rows, rebuilt from the
+# published concordance by `toc/build_toc.py` in a couple of minutes. Released
+# as an artifact, never committed, for the same reason as the resolver index: it
+# is derived, and anyone with the concordance can regenerate it byte for byte.
+toc/dist/
