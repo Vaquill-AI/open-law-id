@@ -45,13 +45,27 @@ Every row is derived from our own corpus. A gap in the corpus is therefore also 
 
 Closing that loop needs a diff against each publisher's own table of contents, jurisdiction by jurisdiction and corpus by corpus. That is a separate artifact and a much larger build. Until it lands, nothing here should be described as proof that a corpus is complete.
 
-## Container labels are not filled yet
+## Container labels
 
-`label` is `null` on every container in this build.
+`label` carries a container's human-readable name where its publisher prints one:
 
-The identifier carries a container's slug and nothing else. For named corpora that is already readable (`alaska-rules-of-court`), but statutes and regulations are 74% of the leaves and their containers are bare numbers: `title-1/chapter-01.10`, `agency-100/chapter-100-x-1`. *"Title 1"* is weaker evidence than *"Title 1 - General Provisions"* for a reader checking whether their title is covered.
+```json
+{"path":"ca/regulations/title-2",  "label":"Title 2. Administration"}
+{"path":"federal/cfr/title-14",    "label":"Title 14 CFR. Aeronautics and Space"}
+{"path":"mt/statutes/title-10",    "label":"Title 10"}
+```
 
-Those labels live in the corpus payloads rather than the concordance, so filling them takes a separate pass. The field is emitted as `null` now so that pass is a fill rather than a schema change, and so a consumer can tell *unlabelled* from *labelled empty*.
+**91%+ of containers are labelled, and just over half of those carry a real name.** The rest look like Montana above, and that is the publisher rather than the build: Montana prints no title names at all, so *"Title 10"* is the whole of what it says. California names every one.
+
+🔴 **`null` means unlabelled, never "the publisher prints nothing".** The two are different facts and a reader has to be able to tell them apart, so an absent label is left absent rather than filled with an empty string.
+
+Labels are harvested from the corpus payloads, which the concordance does not carry, so they arrive via `--labels`:
+
+```bash
+python toc/build_toc.py --labels container_labels.json
+```
+
+The harvest aligns each container in the identifier path against the matching breadcrumb node, and **skips anything whose depths disagree rather than guessing**. Breadcrumb shape is not uniform (some corpora append the leaf as a trailing node, some do not), and a label shifted up one level would misname every container under it. `toc-manifest.json` reports `containers_labelled` so the coverage is a number rather than an impression.
 
 ## Row shapes
 

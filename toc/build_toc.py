@@ -58,8 +58,19 @@ from pathlib import Path
 from typing import Any
 
 
-def build(concordance: Path, out_dir: Path) -> dict[str, Any]:
+def build(
+    concordance: Path, out_dir: Path, labels_path: Path | None = None
+) -> dict[str, Any]:
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    # Container labels, harvested from the corpus in a separate read-only pass.
+    # Absent is a legitimate state and must stay distinguishable from empty: a
+    # consumer has to be able to tell "we have not looked" from "the publisher
+    # prints no name here", and 46.8% of the labelled containers are the second
+    # case (Montana names no title; California names every one).
+    labels: dict[str, str] = {}
+    if labels_path is not None and labels_path.exists():
+        labels = json.loads(labels_path.read_text())
 
     # path -> [leaf_count, set of direct children]. Held in memory because the
     # container tree is ~400k nodes against ~4.6M leaves: three orders of
@@ -111,7 +122,7 @@ def build(concordance: Path, out_dir: Path) -> dict[str, Any]:
                         "depth": len(parts) - 2,
                         "parent": "/".join(parts[:-1]) if len(parts) > 2 else None,
                         # Filled by the corpus pass; see the module docstring.
-                        "label": None,
+                        "label": labels.get(path),
                         "sections_held": leaf_count[path],
                         "children": len(children.get(path, ())),
                     },
@@ -162,7 +173,8 @@ def build(concordance: Path, out_dir: Path) -> dict[str, Any]:
             "the corpus is also a gap here. Diffing against each publisher's own "
             "table of contents is a separate artifact."
         ),
-        "labels_filled": False,
+        "labels_filled": bool(labels),
+        "containers_labelled": sum(1 for c in containers if labels.get(c)),
         "by_jurisdiction": dict(by_corpus),
     }
     (out_dir / "toc-manifest.json").write_text(
@@ -179,6 +191,12 @@ def main() -> int:
         default=Path("concordance/dist/concordance.jsonl.gz"),
     )
     ap.add_argument("--out", type=Path, default=Path("toc/dist"))
+    ap.add_argument(
+        "--labels",
+        type=Path,
+        default=None,
+        help="JSON map {container_path: label}, harvested from the corpus payloads.",
+    )
     args = ap.parse_args()
 
     if not args.concordance.exists():
@@ -186,11 +204,12 @@ def main() -> int:
             f"{args.concordance} not found; build or download the concordance first."
         )
 
-    manifest = build(args.concordance, args.out)
+    manifest = build(args.concordance, args.out, args.labels)
     print(f"  sections     {manifest['sections']:>12,}")
     print(f"  containers   {manifest['containers']:>12,}")
     print(f"  TOTAL rows   {manifest['rows']:>12,}")
     print(f"  jurisdictions{manifest['jurisdictions']:>12,}")
+    print(f"  labelled     {manifest['containers_labelled']:>12,}")
     print(f"\n  -> {args.out}/toc.jsonl.gz")
     return 0
 
